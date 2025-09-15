@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/automaton.schema.json",
+  "title": "Automaton",
+  "type": "object",
+  "required": ["alphabet", "states", "transitions"],
+  "properties": {
+    "alphabet": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Símbolos válidos (excluye ε)."
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "label": { "type": "string" },
+          "start": { "type": "boolean" },
+          "accept": { "type": "boolean" },
+          "x": { "type": "number" },
+          "y": { "type": "number" }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "description": "Lista de estados. Exactamente uno con start=true para DFA/NFA estándar."
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "symbol"],
+        "properties": {
+          "from": { "type": "string", "minLength": 1 },
+          "to": { "type": "string", "minLength": 1 },
+          "symbol": { "type": "string", "minLength": 1, "description": "Símbolo del alfabeto o 'ε' para epsilon." }
+        },
+        "additionalProperties": false
+      },
+      "description": "Transiciones dirigidas etiquetadas con símbolo."
+    }
+  },
+  "additionalProperties": false
+}
